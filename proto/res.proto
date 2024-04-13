@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+// Definición del mensaje para una asignatura
+message Asignatura {
+    string codigo = 1;
+    string nombre = 2;
+    string seccion = 3;
+    string evento = 4;
+    string horario = 5;
+    string profesor = 6;
+    string sede = 7;
+    string paquete = 8;
+}
+
+// Definición del mensaje para una lista de asignaturas
+message AsignaturaList {
+    repeated Asignatura asignaturas = 1;
+}
+
+// Definición de servicios
+service AsignaturaService {
+    rpc List(Empty) returns (AsignaturaList) {}
+    // Otros métodos RPC aquí según sea necesario
+}
+
+// Definición de un mensaje vacío
+message Empty {}

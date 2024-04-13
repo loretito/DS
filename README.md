@@ -1,1 +1,5 @@
-# DS
+# Tarea Sistemas Distribuidos 
+
+```bash
+npm i
+```
