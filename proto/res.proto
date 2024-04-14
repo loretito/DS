@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+package asignatura;
 // Definición del mensaje para una asignatura
 message Asignatura {
     string codigo = 1;
