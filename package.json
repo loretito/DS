@@ -8,12 +8,21 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "```bash npm i ```",
   "dependencies": {
     "@grpc/grpc-js": "^1.10.6",
     "@grpc/proto-loader": "^0.7.12",
     "express": "^4.19.2",
     "pg": "^8.11.5",
     "redis": "^4.6.13"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loretito/DS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/loretito/DS/issues"
+  },
+  "homepage": "https://github.com/loretito/DS#readme"
 }
