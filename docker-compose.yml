@@ -14,6 +14,17 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./db-init:/docker-entrypoint-initdb.d
+      
+  redis_clasic_lru:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_clasic_lru_data:/data
+    environment:
+      - REDIS_PASSWORD=tilines
+    command: ["redis-server", "--appendonly", "no", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
 
 volumes:
   db_data:
+  redis_clasic_lru_data:
