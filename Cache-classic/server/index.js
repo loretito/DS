@@ -20,7 +20,7 @@ redisClient.on('connect', () => {
 
 
 // cargar el archivo proto
-const packageDefinition = protoLoader.loadSync('../proto/res.proto', {
+const packageDefinition = protoLoader.loadSync('../../proto/res.proto', {
     keepCase: true,
     longs: String,
     enums: String,
