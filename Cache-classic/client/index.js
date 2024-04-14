@@ -1,113 +1,79 @@
-const grpc = require('@grpc/grpc-js');
-const protoLoader = require('@grpc/proto-loader');
+const express = require("express");
+const app = express();
+const port = 3000;
 
-// Cargar el archivo proto
-const packageDefinition = protoLoader.loadSync('../../proto/res.proto', {
-    keepCase: true,
-    longs: String,
-    enums: String,
-    defaults: true,
-    oneofs: true
+app.use(express.json());
+
+app.listen(port, () => {
+  console.log(`Servidor Express corriendo en http://localhost:${port}`);
 });
 
-const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
-const myService = protoDescriptor.res;
+const rpcMethods = require("../server/rpc-methods");
+const Redis = require("redis");
+const grpc = require("@grpc/grpc-js");
+const protoLoader = require("@grpc/proto-loader");
 
-// Crear un cliente gRPC
-const client = new myService.ResService('localhost:50051', grpc.credentials.createInsecure());
+// Inicializa el cliente de Redis
+const redisClient = Redis.createClient({
+  url: "redis://default:tilines@localhost:6379",
+});
+redisClient.connect();
 
-// Método para obtener la lista de asignaturas desde el servidor
-function obtenerListaDeAsignaturas() {
-    return new Promise((resolve, reject) => {
-        client.List({}, (error, response) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(response.items);
-            }
-        });
-    });
-}
+// Inicializa el cliente gRPC
+const protoDefinition = protoLoader.loadSync("../../proto/res.proto", {
+  /* opciones */
+});
+const grpcObject = grpc.loadPackageDefinition(protoDefinition);
+const grpcClient = new grpcObject.asignatura.AsignaturaService(
+  "localhost:50051",
+  grpc.credentials.createInsecure()
+);
 
-// Método para obtener una asignatura por su código desde el servidor
-function obtenerAsignaturaPorCodigo(codigo) {
-    return new Promise((resolve, reject) => {
-        client.Get({ codigo }, (error, response) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(response.asignatura);
-            }
-        });
-    });
-}
-
-// Método para insertar una asignatura en el servidor
-function insertarAsignatura(asignatura) {
-    return new Promise((resolve, reject) => {
-        client.Insert({ asignatura }, (error, response) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(response.success);
-            }
-        });
-    });
-}
-
-// Método para actualizar una asignatura en el servidor
-function actualizarAsignatura(asignatura) {
-    return new Promise((resolve, reject) => {
-        client.Update({ asignatura }, (error, response) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(response.success);
-            }
-        });
-    });
-}
-
-// Método para eliminar una asignatura por su código en el servidor
-function eliminarAsignaturaPorCodigo(codigo) {
-    return new Promise((resolve, reject) => {
-        client.Delete({ codigo }, (error, response) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(response.success);
-            }
-        });
-    });
-}
-
-// Ejemplo de uso
-async function main() {
-    try {
-        // Obtener la lista de asignaturas
-        const asignaturas = await obtenerListaDeAsignaturas();
-        console.log('Lista de asignaturas:', asignaturas);
-
-        // Obtener una asignatura por su código
-        const asignatura = await obtenerAsignaturaPorCodigo('CIG1002');
-        console.log('Asignatura por código:', asignatura);
-
-        // Insertar una nueva asignatura
-        const nuevaAsignatura = { codigo: 'NUEVA001', nombre: 'Nueva Asignatura', seccion: 'Sección 1' };
-        const insercionExitosa = await insertarAsignatura(nuevaAsignatura);
-        console.log('Inserción exitosa:', insercionExitosa);
-
-        // Actualizar una asignatura existente
-        const asignaturaActualizada = { codigo: 'CIG1002', nombre: 'Inglés General II Modificado', seccion: 'Sección 10' };
-        const actualizacionExitosa = await actualizarAsignatura(asignaturaActualizada);
-        console.log('Actualización exitosa:', actualizacionExitosa);
-
-        // Eliminar una asignatura por su código
-        const eliminacionExitosa = await eliminarAsignaturaPorCodigo('NUEVA001');
-        console.log('Eliminación exitosa:', eliminacionExitosa);
-    } catch (error) {
-        console.error('Error:', error);
+// Middleware para verificar el cache antes de proceder a la lógica del negocio
+app.use("/api/:key", (req, res, next) => {
+  const key = req.params.key;
+  redisClient.get(key, (err, data) => {
+    if (err) throw err;
+    if (data !== null) {
+      res.send(data);
+    } else {
+      next();
     }
-}
+  });
+});
 
-main();
+// Ruta de ejemplo que utiliza gRPC y Redis
+app.get("/api/:key", (req, res) => {
+  const key = req.params.key;
+  grpcClient.someMethod({ key: key }, (error, grpcResponse) => {
+    if (!error) {
+      redisClient.setex(key, 3600, JSON.stringify(grpcResponse)); // Guarda la respuesta en Redis por 1 hora
+      res.json(grpcResponse);
+    } else {
+      res.status(500).json({ error: "Error al recuperar datos" });
+    }
+  });
+});
+
+
+app.get("/api/asignaturas/:codigo", (req, res) => {
+    const codigo = req.params.codigo;
+    console.log(`Inicio de la solicitud gRPC para el código: ${codigo}`);
+    const start = Date.now();
+
+    grpcClient.Get({ codigo: codigo }, (error, grpcResponse) => {
+        const duration = Date.now() - start;
+        console.log(`gRPC solicitado en ${duration} ms`);
+
+        if (!error) {
+            res.json(grpcResponse);
+        } else {
+            res.status(500).json({ error: "Error al recuperar datos" });
+        }
+    });
+});
+
+
+app.get("/uwu", (req, res) => {
+    res.status(200).json({ message: "uwu" });
+});
