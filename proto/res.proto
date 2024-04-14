@@ -17,11 +17,28 @@ message AsignaturaList {
     repeated Asignatura asignaturas = 1;
 }
 
+message AsignaturaRequest {
+    string codigo = 1;
+}
+
+message AsignaturaQuery {
+    string seccion = 1;
+    string sede = 2;
+}
+
 // Definición de servicios
 service AsignaturaService {
     rpc List(Empty) returns (AsignaturaList) {}
-    // Otros métodos RPC aquí según sea necesario
+    rpc Get(AsignaturaRequest) returns (Asignatura) {}
+    rpc Create(Asignatura) returns (Asignatura) {}
+    rpc Update(Asignatura) returns (Asignatura) {}
+    rpc Delete(AsignaturaRequest) returns (Empty) {}
+
+    rpc Search(AsignaturaQuery) returns (AsignaturaList) {}
 }
+
+    // Otros métodos RPC aquí según sea necesario
+
 
 // Definición de un mensaje vacío
 message Empty {}
