@@ -1,0 +1,20 @@
+{
+  "name": "tarea-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.7.0",
+    "@grpc/proto-loader": "^0.7.2",
+    "postgres": "^3.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

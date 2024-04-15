@@ -10,7 +10,7 @@ const pool = new Pool({
   host: 'localhost',  // Asegúrate de que este host sea accesible desde donde se ejecuta tu servidor gRPC
   database: 'ramos',
   password: 'postgres',
-  port: 5454,  // Puerto mapeado en Docker Compose
+  port: 5432,  // Puerto mapeado en Docker Compose
 });
 
 pool.connect(err => {

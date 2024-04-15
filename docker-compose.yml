@@ -23,7 +23,7 @@ services:
       - redis_clasic_lru_data:/data
     environment:
       - REDIS_PASSWORD=tilines
-    command: ["redis-server", "--appendonly", "no", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru", "--requirepass", "tilines"]
+    command: ["redis-server", "--appendonly", "no", "--maxmemory", "2mb", "--maxmemory-policy", "allkeys-lru", "--requirepass", "tilines"]
 
 volumes:
   db_data:
