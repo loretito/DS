@@ -19,7 +19,7 @@ services:
     environment:
       - REDIS_REPLICATION_MODE=master
       - REDIS_PASSWORD=master1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lru --maxmemory 2mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lru --maxmemory 256mb
 
   redis-replica-uno:
     image: 'bitnami/redis:7.0.4-debian-11-r23'
@@ -33,7 +33,7 @@ services:
       - REDIS_MASTER_PORT_NUMBER=6379
       - REDIS_MASTER_PASSWORD=master1234
       - REDIS_PASSWORD=replica1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lru --maxmemory 2mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lru --maxmemory 256mb
 
   redis-replica-dos:
     image: 'bitnami/redis:7.0.4-debian-11-r23'
@@ -47,7 +47,7 @@ services:
       - REDIS_MASTER_PORT_NUMBER=6379
       - REDIS_MASTER_PASSWORD=master1234
       - REDIS_PASSWORD=replica1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lru --maxmemory 2mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lru --maxmemory 256mb
 
 volumes:
   db_data: {}

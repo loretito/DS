@@ -17,7 +17,8 @@ const serviceProto = grpc.loadPackageDefinition(packageDefinition);
 const server = new grpc.Server();
 
 // Implementation of the RPC methods
-server.addService(serviceProto.AsignaturasServicio.service, {
+server.addService(serviceProto.AsignaturaServicios.service, {
+
     // Get all entries from asignatura table
     ObtenerTodasAsignaturas: async (call, callback) => {
         try {

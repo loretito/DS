@@ -16,8 +16,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
     oneofs: true
 });
 
-const grpcObject = grpc.loadPackageDefinition(packageDefinition);
-const AsignaturaServicios = grpcObject.AsignaturaServicios;
+const AsignaturaServicios = grpc.loadPackageDefinition(packageDefinition).AsignaturaServicios;
 
 // Create a new gRPC client
 const clientService = new AsignaturaServicios(
@@ -39,7 +38,7 @@ app.get('/asignaturas', async (req, res) => {
         res.json(JSON.parse(cache));
     } else {
         console.log('Fetching from backend!!');
-        clientService.ObtenerTodasAsignaturas({}, (error, items) => {
+        clientService.ObtenerTodasAsignaturas(null, (error, items) => {
             if (error) {
                 console.error('Error fetching from gRPC service', error);
                 return res.status(500).json({ message: 'Internal server error' });
@@ -72,7 +71,6 @@ app.get('/asignatura/:id', async (req, res) => {
         });
     }
 });
-
 
 app.get('/uwu', async (req, res) => {
     res.json({ message: 'uwu' });

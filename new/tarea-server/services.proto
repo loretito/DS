@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 // Define un servicio que maneja solicitudes relacionadas con asignaturas
-service AsignaturasServicio {
+service AsignaturaServicios {
     // Retorna todas las asignaturas
     rpc ObtenerTodasAsignaturas (Vacio) returns (ListaAsignaturas) {}
 
