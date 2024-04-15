@@ -1,8 +1,5 @@
-version: '3.9'
-
 services:
-  
-  pgdb:
+  postgresql:
     image: postgres
     container_name: pgdb
     environment:
@@ -15,16 +12,42 @@ services:
       - db_data:/var/lib/postgresql/data
       - ./db-init:/docker-entrypoint-initdb.d
 
-  redis_clasic_lru:
-    image: redis:latest
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_clasic_lru_data:/data
+  redis-master:
+    image: 'bitnami/redis:7.0.4-debian-11-r23'
+    expose:
+      - '6379'
     environment:
-      - REDIS_PASSWORD=tilines
-    command: ["redis-server", "--appendonly", "no", "--maxmemory", "2mb", "--maxmemory-policy", "allkeys-lru", "--requirepass", "tilines"]
+      - REDIS_REPLICATION_MODE=master
+      - REDIS_PASSWORD=master1234
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lru --maxmemory 256mb
+
+  redis-replica-uno:
+    image: 'bitnami/redis:7.0.4-debian-11-r23'
+    expose:
+      - '6379'
+    depends_on:
+      - redis-master
+    environment:
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=master1234
+      - REDIS_PASSWORD=replica1234
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lru --maxmemory 256mb
+
+  redis-replica-dos:
+    image: 'bitnami/redis:7.0.4-debian-11-r23'
+    expose:
+      - '6379'
+    depends_on:
+      - redis-master
+    environment:
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=master1234
+      - REDIS_PASSWORD=replica1234
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lru --maxmemory 256mb
 
 volumes:
-  db_data:
-  redis_clasic_lru_data:
+  db_data: {}
