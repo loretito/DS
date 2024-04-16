@@ -1,17 +1,4 @@
 services:
-  postgresql:
-    image: postgres
-    container_name: pgdb
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ramos
-    ports:
-      - "5454:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-      - ./db-init:/docker-entrypoint-initdb.d
-
   redis-master:
     image: 'bitnami/redis:7.0.4-debian-11-r23'
     expose:
@@ -24,7 +11,7 @@ services:
   redis-replica-uno:
     image: 'bitnami/redis:7.0.4-debian-11-r23'
     expose:
-      - '6379'
+      - '6380'
     depends_on:
       - redis-master
     environment:
@@ -38,7 +25,7 @@ services:
   redis-replica-dos:
     image: 'bitnami/redis:7.0.4-debian-11-r23'
     expose:
-      - '6379'
+      - '6381'
     depends_on:
       - redis-master
     environment:
@@ -48,6 +35,19 @@ services:
       - REDIS_MASTER_PASSWORD=master1234
       - REDIS_PASSWORD=replica1234
     command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lru --maxmemory 256mb
+
+  postgresql:
+    image: postgres
+    container_name: pgdb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ramos
+    ports:
+      - "5454:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d
 
 volumes:
   db_data: {}
