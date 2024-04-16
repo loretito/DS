@@ -1,7 +1,7 @@
 const grpc = require("@grpc/grpc-js");
 const PROTO_PATH = "./services.proto";
 var protoLoader = require("@grpc/proto-loader");
-const postgres = require("./postgres.js");
+const postgres = require("../postgres.js");
 const redis = require("redis");
 const client = redis.createClient({
   password: 'master1234'  // Asegúrate de usar la contraseña correcta para tu instancia de Redis

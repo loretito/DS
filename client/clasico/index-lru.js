@@ -1,5 +1,5 @@
 const express = require('express');
-const { client1 } = require('./redis');  // Asegúrate de que tu cliente Redis esté configurado correctamente para manejar zAdd, etc.
+const { client1 } = require('../redis/redis');  
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const PROTO_PATH = './services.proto';
@@ -20,18 +20,13 @@ const AsignaturaServicios = grpc.loadPackageDefinition(packageDefinition).Asigna
 
 // Create a new gRPC client
 const clientService = new AsignaturaServicios(
-    '127.0.0.1:50051',  // Asegúrate de que esta es la dirección correcta para el servidor gRPC
-    grpc.credentials.createInsecure()  // Solo para desarrollo, considera opciones seguras para producción
+    '127.0.0.1:50051',  // Ensure this is the correct address for the gRPC server
+    grpc.credentials.createInsecure()  // Only for development, consider secure options for production
 );
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
-// Función para actualizar el índice MRU en Redis
-async function updateMruIndex(cacheKey) {
-    await client1.zAdd('mru_index', { score: Date.now(), value: cacheKey });
-}
 
 // Endpoint to get all asignaturas
 app.get('/asignaturas', async (req, res) => {
@@ -40,7 +35,6 @@ app.get('/asignaturas', async (req, res) => {
 
     if (cache) {
         console.log('Cache hit!!');
-        await updateMruIndex(cacheKey);  // Actualizar índice MRU
         res.json(JSON.parse(cache));
     } else {
         console.log('Fetching from backend!!');
@@ -50,8 +44,7 @@ app.get('/asignaturas', async (req, res) => {
                 return res.status(500).json({ message: 'Internal server error' });
             }
             const data = JSON.stringify(items);
-            client1.set(cacheKey, data, 'EX', 3600); // Establecer caché con una expiración de 1 hora
-            updateMruIndex(cacheKey);  // Actualizar índice MRU
+            client1.set(cacheKey, data, 'EX', 3600); // Set cache with a 1-hour expiration
             res.json(items);
         });
     }
@@ -64,7 +57,6 @@ app.get('/asignatura/:id', async (req, res) => {
 
     if (cache) {
         console.log('Cache hit!!');
-        await updateMruIndex(cacheKey);  // Actualizar índice MRU
         res.json(JSON.parse(cache));
     } else {
         console.log('Fetching from backend!!');
@@ -74,8 +66,7 @@ app.get('/asignatura/:id', async (req, res) => {
                 return res.status(500).json({ message: 'Internal server error' });
             }
             const data = JSON.stringify(item);
-            client1.set(cacheKey, data, 'EX', 3600); // Establecer caché con una expiración de 1 hora
-            updateMruIndex(cacheKey);  // Actualizar índice MRU
+            client1.set(cacheKey, data, 'EX', 3600); // Set cache with a 1-hour expiration
             res.json(item);
         });
     }
@@ -83,4 +74,4 @@ app.get('/asignatura/:id', async (req, res) => {
 
 app.get('/uwu', async (req, res) => {
     res.json({ message: 'uwu' });
-});
+})

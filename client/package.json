@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start-clasic-lru": "nodemon ./clasico/index-lru.js",
+    "start-clasic-mru": "nodemon ./clasico/index-mru.js",
+    "start-partition-lru": "nodemon ./particion/index-lru.js",
+    "start-partition-mru": "nodemon ./particion/index-mru.js",
+    "start-replica-lru": "nodemon ./replica/index-lru.js",
+    "start-replica-mru": "nodemon ./replica/index-mru.js"
   },
   "keywords": [],
   "author": "",
