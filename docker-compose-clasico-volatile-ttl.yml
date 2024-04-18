@@ -1,11 +1,11 @@
 services:
-  redis-clasic-mru:
+  redis-clasic-lru:
     image: 'bitnami/redis:7.0.4-debian-11-r23'
     expose:
       - '6379'
     environment:
       - REDIS_PASSWORD=master1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy noeviction --maxmemory 256mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy volatile-ttl --maxmemory 2mb
 
   postgresql:
     image: postgres
@@ -22,4 +22,3 @@ services:
 
 volumes:
   db_data: {}
-

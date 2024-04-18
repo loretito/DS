@@ -5,8 +5,8 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - ./redis-node1.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf --cluster-enabled yes --maxmemory-policy noeviction
+      - ./redis-node1-random.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf --cluster-enabled yes
     networks:
       ipv4_network:
         ipv4_address: 172.18.0.31
@@ -23,8 +23,8 @@ services:
     ports:
       - "6380:6379"
     volumes:
-      - ./redis-node2.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf --cluster-enabled yes --maxmemory-policy noeviction
+      - ./redis-node2-random.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf --cluster-enabled yes
     networks:
       ipv4_network:
         ipv4_address: 172.18.0.32
@@ -36,8 +36,8 @@ services:
     ports:
       - "6381:6379"
     volumes:
-      - ./redis-node3.conf:/usr/local/etc/redis/redis.conf
-    command: redis-server /usr/local/etc/redis/redis.conf --cluster-enabled yes --maxmemory-policy noeviction
+      - ./redis-node3-random.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf --cluster-enabled yes
     networks:
       ipv4_network:
         ipv4_address: 172.18.0.33
