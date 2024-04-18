@@ -14,6 +14,8 @@ const client1 = new Redis.Cluster(redisConfig);
 const app = express();
 const PORT = 3000;
 
+let cacheHits = 0;
+
 // Load and define the gRPC service
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
     keepCase: true,
@@ -75,6 +77,10 @@ app.get('/asignatura/:id', async (req, res) => {
             res.json(item);
         });
     }
+});
+
+app.get('/cache-hits', (req, res) => {
+    res.json({ cacheHits });
 });
 
 app.get('/uwu', async (req, res) => {

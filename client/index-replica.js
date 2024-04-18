@@ -8,6 +8,8 @@ const app = express();
 const PORT = 3000;
 app.use(express.json());
 
+let cacheHits = 0;
+
 // Configuración de los clientes de Redis conectados a las réplicas
 const redisClients = [
     new Redis({ port: 6380, host: 'redis-replica-uno', password: 'replica1234' }),
@@ -86,6 +88,10 @@ app.get('/asignaturas/:id', (req, res) => {
             }
         });
     });
+});
+
+app.get('/cache-hits', (req, res) => {
+    res.json({ cacheHits });
 });
 
 app.listen(PORT, () => {
