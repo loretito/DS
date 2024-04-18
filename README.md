@@ -5,8 +5,8 @@ npm i
 ```
 
 ```bash
-docker-compose up -d
-
+docker-compose -f < docker-compose-file-name.yml > up -d
+docker-compose -f < docker-compose-file-name.yml > down
 ```
 
 Server
