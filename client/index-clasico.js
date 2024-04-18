@@ -75,7 +75,7 @@ app.get('/asignatura/:id', async (req, res) => {
             client1.set(cacheKey, JSON.stringify(response), 'EX', 3600, err => {
                 if (err) console.error('Error setting cache:', err);
             });
-            res.json(response.asignatura);  // Ensure you are sending the correct part of the response
+            res.json(response);  // Ensure you are sending the correct part of the response
         });
     }
 });
@@ -93,11 +93,12 @@ app.get('/asignatura-cod/:cod', async (req, res) => {
         } else {
             console.log('Fetching from backend!!');
             clientService.ObtenerAsignaturaPorCodigo({ codigo: cod }, (error, item) => {
+                console.log('received item:', item);
                 if (error) {
                     console.error('Error cacheKeyfetching from gRPC service:', error);
                     return res.status(500).json({ message: 'Internal server error' });
                 }
-                if (!item || !item.asignatura) {
+                if (!item || Object.keys(item).length === 0 ){
                     return res.status(404).json({ message: 'Asignatura not found' });
                 }
                 const data = JSON.stringify(item);

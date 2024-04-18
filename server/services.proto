@@ -7,6 +7,8 @@ service AsignaturaServicios {
 
     // Retorna una asignatura específica por ID
     rpc ObtenerAsignaturaPorId (IdentificadorAsignatura) returns (AsignaturaRespuesta) {}
+
+    rpc ObtenerAsignaturaPorCodigo (CodigoAsignatura) returns (ListaAsignaturas) {}
 }
 
 // Mensaje vacío utilizado para solicitudes que no requieren parámetros específicos

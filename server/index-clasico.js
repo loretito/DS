@@ -63,9 +63,9 @@ server.addService(serviceProto.AsignaturaServicios.service, {
         console.log(`Received request to fetch asignatura with codigo: ${call.request.codigo}`);
         try {
             const result = await postgres`
-            SELECT * FROM asignatura WHERE codigo=${call.request.codigo};
+            SELECT * FROM asignatura WHERE codigo_asignatura=${call.request.codigo};
             `;
-            console.log(`Query result: ${JSON.stringify(result)}`);
+            console.log('Query result:', result);
             if (result.length > 0) {
                 callback(null, {asignatura: result[0]});
             } else {
