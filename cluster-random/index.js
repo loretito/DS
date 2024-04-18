@@ -1,6 +1,6 @@
 require('dotenv').config()
 const path = require('path')
-const buildRedisClient = require('./service/redisClient')
+const buildRedisClient = require('../client/service/redisClient')
 // Aqui van las otras dependencias como express y esas
 
 const redis = buildRedisClient()

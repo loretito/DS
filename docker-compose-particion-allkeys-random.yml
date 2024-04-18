@@ -9,7 +9,7 @@ services:
     command: redis-server /usr/local/etc/redis/redis.conf --cluster-enabled yes
     networks:
       ipv4_network:
-        ipv4_address: 172.18.0.31
+        ipv4_address: 172.30.0.31
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -27,7 +27,7 @@ services:
     command: redis-server /usr/local/etc/redis/redis.conf --cluster-enabled yes
     networks:
       ipv4_network:
-        ipv4_address: 172.18.0.32
+        ipv4_address: 172.30.0.32
     restart: unless-stopped
 
   redis3:
@@ -40,7 +40,7 @@ services:
     command: redis-server /usr/local/etc/redis/redis.conf --cluster-enabled yes
     networks:
       ipv4_network:
-        ipv4_address: 172.18.0.33
+        ipv4_address: 172.30.0.33
     restart: unless-stopped
 
   redis-init:
@@ -51,10 +51,10 @@ services:
       redis1:
         condition: service_healthy
     command: >
-      sh -c "sleep 20 && echo 'yes' | redis-cli --cluster create 172.18.0.31:6379 172.18.0.32:6380 172.18.0.33:6381 --cluster-replicas 0"
+      sh -c "sleep 20 && echo 'yes' | redis-cli --cluster create 172.30.0.31:6379 172.30.0.32:6380 172.30.0.33:6381 --cluster-replicas 0"
     networks:
       ipv4_network:
-        ipv4_address: 172.18.0.34
+        ipv4_address: 172.30.0.34
     restart: unless-stopped
 
 networks:
@@ -63,6 +63,6 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.18.0.0/16
+        - subnet: 172.30.0.0/16
 volumes:
   db_data: {}
