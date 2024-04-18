@@ -1,7 +1,7 @@
 const grpc = require("@grpc/grpc-js");
 const PROTO_PATH = "./services.proto";
 var protoLoader = require("@grpc/proto-loader");
-const postgres = require("../postgres.js");
+const postgres = require("./postgres.js");
 const Redis = require('ioredis');
 
 // Configuración de Redis Cluster

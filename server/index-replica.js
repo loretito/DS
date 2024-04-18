@@ -2,7 +2,7 @@ const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
 const PROTO_PATH = "./services.proto";
 const Redis = require('ioredis');
-const postgres = require("../postgres.js");
+const postgres = require("./postgres.js");
 
 const redisMaster = new Redis({ port: 6379, host: 'redis-master', password: 'master1234' });
 const redisReplicas = [
