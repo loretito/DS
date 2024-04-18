@@ -53,6 +53,7 @@ app.get('/asignaturas', async (req, res) => {
     }
 });
 
+
 app.get('/asignatura/:id', async (req, res) => {
     const cacheKey = `asignatura_${req.params.id}`;
     const id = parseInt(req.params.id);  // Parse the ID to ensure it's an integer
@@ -60,6 +61,7 @@ app.get('/asignatura/:id', async (req, res) => {
     const cache = await client1.get(cacheKey);
     if (cache) {
         console.log('Cache hit!!');
+        cacheHits++;
         res.json(JSON.parse(cache));
     } else {
         console.log('Fetching from backend!!');

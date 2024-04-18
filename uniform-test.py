@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 url_endpoint = 'http://localhost:3000/asignatura/'
 
 def random_id():
-    numero_aleatorio = random.randint(1, 8712)
+    numero_aleatorio = random.randint(1, 69696)
     return numero_aleatorio
 
 def realizar_consulta_get(id_asignatura):

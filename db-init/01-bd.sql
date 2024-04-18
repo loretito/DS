@@ -18,3 +18,17 @@ CREATE TABLE IF NOT EXISTS asignatura (
 
 COPY asignatura(codigo_asignatura, nombre_asignatura, seccion, evento, horario, profesor, sede, paquete) 
 FROM '/docker-entrypoint-initdb.d/02-ramos.txt' DELIMITER '|' CSV HEADER;
+COPY asignatura(codigo_asignatura, nombre_asignatura, seccion, evento, horario, profesor, sede, paquete) 
+FROM '/docker-entrypoint-initdb.d/02-ramos.txt' DELIMITER '|' CSV HEADER;
+COPY asignatura(codigo_asignatura, nombre_asignatura, seccion, evento, horario, profesor, sede, paquete) 
+FROM '/docker-entrypoint-initdb.d/02-ramos.txt' DELIMITER '|' CSV HEADER;
+COPY asignatura(codigo_asignatura, nombre_asignatura, seccion, evento, horario, profesor, sede, paquete) 
+FROM '/docker-entrypoint-initdb.d/02-ramos.txt' DELIMITER '|' CSV HEADER;
+COPY asignatura(codigo_asignatura, nombre_asignatura, seccion, evento, horario, profesor, sede, paquete) 
+FROM '/docker-entrypoint-initdb.d/02-ramos.txt' DELIMITER '|' CSV HEADER;
+COPY asignatura(codigo_asignatura, nombre_asignatura, seccion, evento, horario, profesor, sede, paquete) 
+FROM '/docker-entrypoint-initdb.d/02-ramos.txt' DELIMITER '|' CSV HEADER;
+COPY asignatura(codigo_asignatura, nombre_asignatura, seccion, evento, horario, profesor, sede, paquete) 
+FROM '/docker-entrypoint-initdb.d/02-ramos.txt' DELIMITER '|' CSV HEADER;
+COPY asignatura(codigo_asignatura, nombre_asignatura, seccion, evento, horario, profesor, sede, paquete) 
+FROM '/docker-entrypoint-initdb.d/02-ramos.txt' DELIMITER '|' CSV HEADER;
