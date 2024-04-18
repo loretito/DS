@@ -54,6 +54,27 @@ server.addService(serviceProto.AsignaturaServicios.service, {
                 details: "Failed to fetch data"
             });
         }
+    },
+    
+    ObtenerAsignaturaPorCodigo: async (call, callback) => {
+        try {
+            const result = await postgres`
+            SELECT * FROM asignatura WHERE codigo=${call.request.codigo};
+            `;
+            if (result.length > 0) {
+                callback(null, {asignatura: result[0]});
+            } else {
+                callback({
+                    code: grpc.status.NOT_FOUND,
+                    details: "Asignatura not found"
+                });
+            }
+        } catch (error) {
+            callback({
+                code: grpc.status.INTERNAL,
+                details: "Failed to fetch data"
+            });
+        }
     }
 });
 
