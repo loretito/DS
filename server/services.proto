@@ -6,7 +6,7 @@ service AsignaturaServicios {
     rpc ObtenerTodasAsignaturas (Vacio) returns (ListaAsignaturas) {}
 
     // Retorna una asignatura específica por ID
-    rpc ObtenerAsignaturaPorId (IdentificadorAsignatura) returns (Asignatura) {}
+    rpc ObtenerAsignaturaPorId (IdentificadorAsignatura) returns (AsignaturaRespuesta) {}
 }
 
 // Mensaje vacío utilizado para solicitudes que no requieren parámetros específicos
@@ -33,4 +33,12 @@ message ListaAsignaturas {
 // Mensaje para solicitar una asignatura por su ID (bd_id)
 message IdentificadorAsignatura {
     int32 id = 1;
+}
+
+message CodigoAsignatura { // Define the request type for fetching by codigo
+    string codigo = 1;
+}
+
+message AsignaturaRespuesta {
+    Asignatura asignatura = 1;
 }

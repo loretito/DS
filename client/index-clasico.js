@@ -56,24 +56,67 @@ app.get('/asignaturas', async (req, res) => {
 // Endpoint to get a specific asignatura by ID
 app.get('/asignatura/:id', async (req, res) => {
     const cacheKey = `asignatura_${req.params.id}`;
+    const id = parseInt(req.params.id, 10);  // Parse the ID to ensure it's an integer
+
     const cache = await client1.get(cacheKey);
 
+    
     if (cache) {
         console.log('Cache hit!!');
         res.json(JSON.parse(cache));
     } else {
         console.log('Fetching from backend!!');
-        clientService.ObtenerAsignaturaPorId({ id: parseInt(req.params.id) }, (error, item) => {
+        clientService.ObtenerAsignaturaPorId({ id: id }, (error, item) => {
+            console.log('received item:', item);
             if (error) {
                 console.error('Error fetching from gRPC service', error);
                 return res.status(500).json({ message: 'Internal server error' });
             }
+            if (!item || !item.asignatura) {
+                return res.status(404).json({ message: 'Asignatura not found' });
+            }
             const data = JSON.stringify(item);
-            client1.set(cacheKey, data, 'EX', 3600); // Set cache with a 1-hour expiration
+            client1.set(cacheKey, data, 'EX', 3600, err => {
+                if (err) console.error('Error setting cache:', err);
+            });
             res.json(item);
         });
     }
 });
+
+
+app.get('/asignatura-cod/:cod', async (req, res) => {
+    const { cod } = req.params;
+
+    const cacheKey = `asignatura_${cod}`;
+    try {
+        const cache = await client1.get(cacheKey);
+        if (cache) {
+            console.log('Cache hit!!');
+            res.json(JSON.parse(cache));
+        } else {
+            console.log('Fetching from backend!!');
+            clientService.ObtenerAsignaturaPorCodigo({ codigo: cod }, (error, item) => {
+                if (error) {
+                    console.error('Error cacheKeyfetching from gRPC service:', error);
+                    return res.status(500).json({ message: 'Internal server error' });
+                }
+                if (!item || !item.asignatura) {
+                    return res.status(404).json({ message: 'Asignatura not found' });
+                }
+                const data = JSON.stringify(item);
+                client1.set(cacheKey, data, 'EX', 3600, err => {
+                    if (err) console.error('Error setting cache:', err);
+                });
+                res.json(item);
+            });
+        }
+    } catch (error) {
+        console.error('Redis operation failed:', error);
+        res.status(500).json({ message: 'Error accessing cache' });
+    }
+});
+
 
 app.get('/cache-hits', async (req, res) => {
     res.json({ cacheHits });

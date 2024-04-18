@@ -38,8 +38,11 @@ server.addService(serviceProto.AsignaturaServicios.service, {
     ObtenerAsignaturaPorId: async (call, callback) => {
         try {
             const result = await postgres`
-            SELECT * FROM asignatura WHERE bd_id=${call.request.id};
+            SELECT * FROM asignatura WHERE bd_id=${parseInt(call.request.id)};
             `;
+
+            console.log('Query result:', result);
+
             if (result.length > 0) {
                 callback(null, {asignatura: result[0]});
             } else {
@@ -57,25 +60,30 @@ server.addService(serviceProto.AsignaturaServicios.service, {
     },
     
     ObtenerAsignaturaPorCodigo: async (call, callback) => {
+        console.log(`Received request to fetch asignatura with codigo: ${call.request.codigo}`);
         try {
             const result = await postgres`
             SELECT * FROM asignatura WHERE codigo=${call.request.codigo};
             `;
+            console.log(`Query result: ${JSON.stringify(result)}`);
             if (result.length > 0) {
                 callback(null, {asignatura: result[0]});
             } else {
+                console.log('No records found for the provided codigo.');
                 callback({
                     code: grpc.status.NOT_FOUND,
                     details: "Asignatura not found"
                 });
             }
         } catch (error) {
+            console.error(`Error during database query: ${error.message}`);
             callback({
                 code: grpc.status.INTERNAL,
                 details: "Failed to fetch data"
             });
         }
     }
+    
 });
 
 // Start the server

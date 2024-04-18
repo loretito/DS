@@ -5,10 +5,10 @@ services:
       - '6379'
     networks:
       ipv4_network:
-        ipv4_address: 172.18.0.2
+        ipv4_address: 172.20.0.2
     environment:
       - REDIS_PASSWORD=master1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-random --maxmemory 2mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-random --maxmemory 10mb
 
   postgresql:
     image: postgres
@@ -29,7 +29,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.18.0.0/16
+        - subnet: 172.20.0.0/16
 
 volumes:
   db_data: {}

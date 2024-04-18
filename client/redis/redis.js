@@ -1,7 +1,7 @@
 const {createClient} = require('redis');
 
 const client1 = createClient({
-    url: 'redis://:master1234@172.21.0.2:6379' //ip contendor maestro
+    url: 'redis://:master1234@172.20.0.2:6379' //ip contendor maestro
 });
 
 // const client2 = createClient({

@@ -39,3 +39,7 @@ message ListaAsignaturas {
 message AsignaturaId {
     int32 id = 1;
 }
+
+message CodigoAsignatura { // Define the request type for fetching by codigo
+    string codigo = 1;
+}
