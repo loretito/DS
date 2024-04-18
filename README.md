@@ -13,6 +13,10 @@ docker-compose -f < docker-compose-file-name.yml > up -d
 docker-compose -f < docker-compose-file-name.yml > down
 ```
 
+To bring down Docker Compose
+```bash
+docker-compose -f < docker-compose-file-name.yml > down
+```
 
 ### Server
 
