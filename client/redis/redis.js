@@ -12,6 +12,7 @@ const client1 = createClient({
 //     url: 'redis://:replica1234@192.168.80.5:6379' //ip contendor esclavo
 // });
 
+
 client1.on('error', (err) => console.log('Redis Client Error', err));
 
 client1.connect();

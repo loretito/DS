@@ -14,7 +14,7 @@ message Vacio {}
 
 // Define la estructura de una asignatura, adaptada a los campos de tu tabla
 message Asignatura {
-    int32 id = 1;
+    int32 bd_id = 1;
     string codigo_asignatura = 2;
     string nombre_asignatura = 3;
     string seccion = 4;

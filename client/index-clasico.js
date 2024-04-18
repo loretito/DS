@@ -53,33 +53,29 @@ app.get('/asignaturas', async (req, res) => {
     }
 });
 
-// Endpoint to get a specific asignatura by ID
 app.get('/asignatura/:id', async (req, res) => {
     const cacheKey = `asignatura_${req.params.id}`;
-    const id = parseInt(req.params.id, 10);  // Parse the ID to ensure it's an integer
+    const id = parseInt(req.params.id);  // Parse the ID to ensure it's an integer
 
     const cache = await client1.get(cacheKey);
-
-    
     if (cache) {
         console.log('Cache hit!!');
         res.json(JSON.parse(cache));
     } else {
         console.log('Fetching from backend!!');
-        clientService.ObtenerAsignaturaPorId({ id: id }, (error, item) => {
-            console.log('received item:', item);
+        clientService.ObtenerAsignaturaPorId({ id: id }, (error, response) => {
+            console.log('received item:', response);
             if (error) {
                 console.error('Error fetching from gRPC service', error);
                 return res.status(500).json({ message: 'Internal server error' });
             }
-            if (!item || !item.asignatura) {
+            if (!response || Object.keys(response).length === 0) {
                 return res.status(404).json({ message: 'Asignatura not found' });
             }
-            const data = JSON.stringify(item);
-            client1.set(cacheKey, data, 'EX', 3600, err => {
+            client1.set(cacheKey, JSON.stringify(response), 'EX', 3600, err => {
                 if (err) console.error('Error setting cache:', err);
             });
-            res.json(item);
+            res.json(response.asignatura);  // Ensure you are sending the correct part of the response
         });
     }
 });
