@@ -1,6 +1,19 @@
 # Tarea 1 Sistemas Distribuidos 
 
-Autors: Cesar Muñoz y Loreto Ñancucheo
+Autors: César Muñoz y Loreto Ñancucheo
+
+
+### Stack
+![Static Badge](https://img.shields.io/badge/gRPC-5CAFB5?style=for-the-badge&logoColor=%23FF0000&link=https%3A%2F%2Fgrpc.io%2Fdocs%2F)
+![Static Badge](https://img.shields.io/badge/docker-0F3486?style=for-the-badge&logo=docker&link=https%3A%2F%2Fdocs.docker.com%2F)
+![Static Badge](https://img.shields.io/badge/Postgresql-6395BF?style=for-the-badge&logo=postgresql&logoColor=%23ffffff&link=https%3A%2F%2Fwww.postgresql.org%2Fdocs%2F)
+
+![Static Badge](https://img.shields.io/badge/Redis-FF8787?style=for-the-badge&logo=redis&logoColor=%23FF0000&link=https%3A%2F%2Fredis.io%2Fdocs%2Flatest%2F)
+![Static Badge](https://img.shields.io/badge/Python-265075?style=for-the-badge&logo=python&logoColor=%23ffffff&link=https%3A%2F%2Fwww.python.org%2Fdoc%2F)
+![Static Badge](https://img.shields.io/badge/Express-222222?style=for-the-badge&logo=express&link=https%3A%2F%2Fexpressjs.com%2F)
+![Static Badge](https://img.shields.io/badge/javascript-222222?style=for-the-badge&logo=javascript&link=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fdocs%2FWeb%2FJavaScript)
+
+
 
 ### Setup
 In both the server and client directories, run:
