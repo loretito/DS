@@ -8,7 +8,7 @@ url_endpoint = 'http://localhost:3000/asignatura/'
 def random_id_entropy():
     random_source = random.SystemRandom()
     random_float = random_source.random()
-    number = int(random_float * 8000) + 1
+    number = int(random_float * 69688) + 1
     return number
 
 def realizar_consulta_get(id_asignatura):
@@ -61,13 +61,13 @@ def main():
     plt.xlabel('ID de la Asignatura')
     plt.ylabel('Cantidad de Consultas')
     plt.title('Cantidad de Consultas por ID de Asignatura')
-    filename = input("\033[91mIngrese el nombre del archivo para guardar el gráfico de consultas (incluya la extensión, ej. consultas.png): \033[0m")
+    filename1 = input("\033[91mIngrese el nombre del archivo para guardar el gráfico de consultas (incluya la extensión, ej. consultas.png): \033[0m")
     plt.tight_layout()
-    plt.savefig(filename)
-    print(f"Gráfico de consultas guardado como {filename}")
+    plt.savefig(filename1)
+    print(f"Gráfico de consultas guardado como {filename1}")
     plt.close()
-
-    # Gráfico del tiempo de respuesta
+    
+     # Gráfico del tiempo de respuesta
     plt.figure(figsize=(19.2, 10.8))
     plt.plot(tiempos_respuesta, marker='o', linestyle='-', color='b')
     plt.title('Tiempo de Respuesta para Cada Consulta')
@@ -78,6 +78,18 @@ def main():
     plt.tight_layout()
     plt.savefig(filename)
     print(f"Gráfico de tiempo de respuesta guardado como {filename}")
+    plt.close()
+
+    # Histograma del tiempo de respuesta
+    plt.figure(figsize=(19.2, 10.8))
+    plt.hist(tiempos_respuesta, bins=20, color='b', edgecolor='black')
+    plt.title('Histograma del Tiempo de Respuesta')
+    plt.xlabel('Tiempo de Respuesta (segundos)')
+    plt.ylabel('Frecuencia')
+    filename2 = input("\033[91mIngrese el nombre del archivo para guardar el histograma de tiempo de respuesta (incluya la extensión, ej. tiempos.png): \033[0m")
+    plt.tight_layout()
+    plt.savefig(filename2)
+    print(f"Histograma de tiempo de respuesta guardado como {filename2}")
     plt.close()
 
 if __name__ == "__main__":

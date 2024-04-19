@@ -6,10 +6,10 @@ services:
     environment:
       - REDIS_REPLICATION_MODE=master
       - REDIS_PASSWORD=master1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-random --maxmemory 10mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-random --maxmemory 5mb
     networks:
       redis_cluster_net:
-        ipv4_address: 173.18.0.2
+        ipv4_address: 173.40.0.2
 
   redis-replica-uno:
     image: 'bitnami/redis:7.0.4-debian-11-r23'
@@ -23,10 +23,10 @@ services:
       - REDIS_MASTER_PORT_NUMBER=6379
       - REDIS_MASTER_PASSWORD=master1234
       - REDIS_PASSWORD=replica1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-random --maxmemory 10mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-random --maxmemory 5mb
     networks:
       redis_cluster_net:
-        ipv4_address: 173.18.0.3
+        ipv4_address: 173.40.0.3
 
   redis-replica-dos:
     image: 'bitnami/redis:7.0.4-debian-11-r23'
@@ -40,10 +40,10 @@ services:
       - REDIS_MASTER_PORT_NUMBER=6379
       - REDIS_MASTER_PASSWORD=master1234
       - REDIS_PASSWORD=replica1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-random --maxmemory 10mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-random --maxmemory 5mb
     networks:
       redis_cluster_net:
-        ipv4_address: 173.18.0.4
+        ipv4_address: 173.40.0.4
 
   postgresql:
     image: postgres
@@ -56,10 +56,10 @@ services:
       - "5454:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
-      - ../db-init:/docker-entrypoint-initdb.d
+      - ../../db-init:/docker-entrypoint-initdb.d
     networks:
       redis_cluster_net:
-        ipv4_address: 173.18.0.10
+        ipv4_address: 173.40.0.10
 
 networks:
   redis_cluster_net:
@@ -67,7 +67,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 173.18.0.0/16
+        - subnet: 173.40.0.0/16
 
 volumes:
   redis_1_data: {}

@@ -86,7 +86,6 @@ server.addService(serviceProto.AsignaturaServicios.service, {
     
 });
 
-// Start the server
 server.bindAsync(
     "127.0.0.1:50051",
     grpc.ServerCredentials.createInsecure(),

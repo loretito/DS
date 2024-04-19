@@ -2,8 +2,6 @@ const grpc = require("@grpc/grpc-js");
 const PROTO_PATH = "./services.proto";
 var protoLoader = require("@grpc/proto-loader");
 const postgres = require("./postgres.js");
-const Redis = require('ioredis');
-
 
 // Carga de protobuf
 var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
@@ -15,9 +13,9 @@ var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 });
 
 const serviceProto = grpc.loadPackageDefinition(packageDefinition);
+
 const server = new grpc.Server();
 
-// Implementación de los métodos RPC
 server.addService(serviceProto.AsignaturaServicios.service, {
     ObtenerTodasAsignaturas: async (call, callback) => {
         try {

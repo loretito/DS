@@ -1,15 +1,15 @@
 services:
-  redis-clasic-random:
+  redis-clasic-volatile-ttl:
     image: 'bitnami/redis:7.0.4-debian-11-r23'
-    container_name: redis-random
+    container_name: redis-volatile-ttl
     expose:
       - '6379'
     networks:
       ipv4_network:
-        ipv4_address: 173.18.0.2
+        ipv4_address: 173.40.0.2
     environment:
       - REDIS_PASSWORD=master1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-random --maxmemory 10mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy volatile-ttl --maxmemory 5mb
 
   postgresql:
     image: postgres
@@ -22,10 +22,10 @@ services:
       - "5454:5432"
     networks:
       ipv4_network:
-        ipv4_address: 173.18.0.10
+        ipv4_address: 173.40.0.10
     volumes:
       - db_data:/var/lib/postgresql/data
-      - ../db-init:/docker-entrypoint-initdb.d
+      - ../../db-init:/docker-entrypoint-initdb.d
     
 networks:
   ipv4_network:
@@ -33,7 +33,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 173.18.0.0/16
+        - subnet: 173.40.0.0/16
 
 volumes:
   db_data: {}

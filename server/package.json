@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-clasic": "nodemon ./index-clasico.js",
+    "start": "nodemon ./index.js",
     "start-partition": "nodemon ./index-particion.js",
     "start-replica": "nodemon ./index-replica.js"
   },
