@@ -2,14 +2,12 @@ const express = require('express');
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const PROTO_PATH = './services.proto';
-const Redis = require('ioredis');
 
-const redisConfig = [
-    { port: 6379, host: '172.18.0.31' },
-    { port: 6380, host: '172.18.0.32' },
-    { port: 6381, host: '172.18.0.33' }
-];
-const client1 = new Redis.Cluster(redisConfig);
+require('dotenv').config()
+const path = require('path')
+const buildRedisClient = require('./service/redisClient')
+
+const redis = buildRedisClient()
 
 const app = express();
 const PORT = 3000;
@@ -38,7 +36,7 @@ app.listen(PORT, () => {
 // Endpoint to get all asignaturas
 app.get('/asignaturas', async (req, res) => {
     const cacheKey = 'asignaturas_all';
-    const cache = await client1.get(cacheKey);
+    const cache = await redis.get(cacheKey);
 
     if (cache) {
         console.log('Cache hit!!');
@@ -51,7 +49,7 @@ app.get('/asignaturas', async (req, res) => {
                 return res.status(500).json({ message: 'Internal server error' });
             }
             const data = JSON.stringify(items);
-            client1.set(cacheKey, data, 'EX', 3600); // Set cache with a 1-hour expiration
+            redis.set(cacheKey, data); // Set cache with a 1-hour expiration
             res.json(items);
         });
     }
@@ -60,21 +58,26 @@ app.get('/asignaturas', async (req, res) => {
 // Endpoint to get a specific asignatura by ID
 app.get('/asignatura/:id', async (req, res) => {
     const cacheKey = `asignatura_${req.params.id}`;
-    const cache = await client1.get(cacheKey);
+    const id = parseInt(req.params.id);  // Parse the ID to ensure it's an integer
 
+    const cache = await redis.get(cacheKey);
     if (cache) {
         console.log('Cache hit!!');
+        cacheHits++;
         res.json(JSON.parse(cache));
     } else {
         console.log('Fetching from backend!!');
-        clientService.ObtenerAsignaturaPorId({ id: parseInt(req.params.id) }, (error, item) => {
+        clientService.ObtenerAsignaturaPorId({ id: id }, (error, response) => {
+            console.log('received item:', response);
             if (error) {
                 console.error('Error fetching from gRPC service', error);
                 return res.status(500).json({ message: 'Internal server error' });
             }
-            const data = JSON.stringify(item);
-            client1.set(cacheKey, data, 'EX', 3600); // Set cache with a 1-hour expiration
-            res.json(item);
+            if (!response || Object.keys(response).length === 0) {
+                return res.status(404).json({ message: 'Asignatura not found' });
+            }
+            redis.set(cacheKey, JSON.stringify(response));
+            res.json(response);  // Ensure you are sending the correct part of the response
         });
     }
 });

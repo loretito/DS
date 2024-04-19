@@ -9,7 +9,7 @@ function buildRedisClient() {
   try {
     // cluster URLs should be passed in with the following format:
     // REDIS_CLUSTER_URLS=10.0.0.1:6379,10.0.0.2:6379,10.0.0.3:6379
-    const nodes = process.env.REDIS_CLUSTER_URLS.split(',').map(url => {
+    const nodes = process.env.REDIS_CLUSTER_URLS_RANDOM.split(',').map(url => {
       const [host, port] = url.split(':')
       return { host, port }
     })

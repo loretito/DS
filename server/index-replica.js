@@ -4,11 +4,18 @@ const PROTO_PATH = "./services.proto";
 const Redis = require('ioredis');
 const postgres = require("./postgres.js");
 
-const redisMaster = new Redis({ port: 6379, host: 'redis-master', password: 'master1234' });
+const redisMaster = new Redis({ port: 6379, host: '192.168.96.2', password: 'master1234' });
 const redisReplicas = [
-    new Redis({ port: 6380, host: 'redis-replica-uno', password: 'replica1234' }),
-    new Redis({ port: 6381, host: 'redis-replica-dos', password: 'replica1234' })
+    new Redis({ port: 6380, host: '192.168.96.5', password: 'replica1234' }),
+    new Redis({ port: 6381, host: '192.168.96.4', password: 'replica1234' })
 ];
+
+// Añade manejo de eventos de error en las conexiones de Redis.
+redisMaster.on('error', (err) => console.error('Error en Redis Master:', err));
+redisReplicas.forEach(client => {
+    client.on('error', (err) => console.error('Error en Redis Replica:', err));
+});
+
 
 function getNextRedisClient() {
     const client = redisReplicas[roundRobinIndex];
