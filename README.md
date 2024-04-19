@@ -1,8 +1,8 @@
 # Tarea 1 Sistemas Distribuidos 
 
-Autores: Cesar Muñoz y Loreto Ñancucheo
+Autors: Cesar Muñoz y Loreto Ñancucheo
 
-## Setup
+### Setup
 In both the server and client directories, run:
 
 ```bash
@@ -30,7 +30,7 @@ npm run start
 
 #### Client
 
-For server operations, you have three options:
+For client operations, you have three options:
 
 ```bash
 # to use clasic cache
@@ -54,7 +54,16 @@ redis-cli
 cluster nodes
 ``` -->
 
+### Testing
+In test directory, for uniform test:
+```python
+python3 uniform-test.py
+```
 
+for the entropy test: 
+```python
+python3 entropy-test.py
+```
 
 ### Miscellaneous
 
