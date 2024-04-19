@@ -1,4 +1,6 @@
-# Tarea Sistemas Distribuidos 
+# Tarea 1 Sistemas Distribuidos 
+
+Autores: Cesar Muñoz y Loreto Ñancucheo
 
 ## Setup
 In both the server and client directories, run:
@@ -7,18 +9,26 @@ In both the server and client directories, run:
 npm i
 ```
 
+#### Docker
 To bring up Docker Compose (depending on the caching method), use:
 ```bash
-docker-compose -f < docker-compose-file-name.yml > up -d
-docker-compose -f < docker-compose-file-name.yml > down
+docker-compose up -d
 ```
 
 To bring down Docker Compose
 ```bash
-docker-compose -f < docker-compose-file-name.yml > down
+docker-compose down -v
 ```
 
-### Server
+#### Server
+
+For server operations:
+
+```bash
+npm run start
+```
+
+#### Client
 
 For server operations, you have three options:
 
@@ -32,23 +42,8 @@ npm run start-partition
 # to use replica cache
 npm run start-replica
 ```
-
-### Client
-
-For server operations, you have three options:
-
-```bash
-# to use clasic cache
-npm run start-clasic
-
-# to use partition cache
-npm run start-partition
-
-# to use replica cache
-npm run start-replica
-```
-
-### Docker Partition
+    
+<!-- #### Docker Partition
 
 To inspect the Docker network and access Redis:
 
@@ -57,4 +52,26 @@ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' red
 docker exec -it redis1 /bin/bash
 redis-cli 
 cluster nodes
+``` -->
+
+
+
+### Miscellaneous
+
+In case db-init is missing permissions:
+
+```bash
+sudo setenforce 0
+sudo chcon -Rt svirt_sandbox_file_t ./db-init/
+```
+
+If subnet 173.18.0.0/16 is occupied:
+
+```bash
+sudo docker network ls
+
+sudo docker network inspect [network_name]
+
+sudo docker network rm [network_name]
+
 ```
