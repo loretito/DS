@@ -6,7 +6,7 @@ services:
       - '6379'
     networks:
       ipv4_network:
-        ipv4_address: 173.40.0.2
+        ipv4_address: 173.18.0.2
     environment:
       - REDIS_PASSWORD=master1234
     command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-random --maxmemory 5mb
@@ -22,7 +22,7 @@ services:
       - "5454:5432"
     networks:
       ipv4_network:
-        ipv4_address: 173.40.0.10
+        ipv4_address: 173.18.0.10
     volumes:
       - db_data:/var/lib/postgresql/data
       - ../../db-init:/docker-entrypoint-initdb.d
@@ -33,7 +33,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 173.40.0.0/16
+        - subnet: 173.18.0.0/16
 
 volumes:
   db_data: {}

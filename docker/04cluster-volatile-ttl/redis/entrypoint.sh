@@ -11,8 +11,8 @@ sleep 5
 # container IP addresses from our docker-compose configuration.
 # `--cluster-replicas 1` Will make sure that every master node will have its replica node
 echo "yes" | redis-cli --cluster create \
-  173.40.0.2:6379 \
-  173.40.0.3:6379 \
-  173.40.0.4:6379 \
+  173.18.0.2:6379 \
+  173.18.0.3:6379 \
+  173.18.0.4:6379 \
   --cluster-replicas 0
 echo "🚀 Redis cluster ready."
