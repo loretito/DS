@@ -4,6 +4,7 @@ import time
 import matplotlib.pyplot as plt
 
 url_endpoint = 'http://localhost:3000/asignatura/'
+url_endpoint_cache_hit = 'http://localhost:3000/cache-hits'
 
 def random_id_entropy():
     numero_aleatorio = random.randint(1, 69696)
@@ -29,6 +30,19 @@ def realizar_consulta_get(id_asignatura):
         print(f"Error inesperado al realizar la consulta para ID {id_asignatura}: {error}")
         return None
 
+def fetch_cache_hit():
+    try:
+        respuesta = requests.get(url_endpoint_cache_hit)
+        if respuesta.status_code == 200:
+            datos = respuesta.json()
+            print(f"Cache hits: {datos['cacheHits']}")
+            return datos['cacheHits']
+        else:
+            print(f"Error al obtener el número de cache hits: {respuesta.status_code}")
+    except Exception as error:
+        print(f"Error inesperado al obtener el número de cache hits: {error}")
+
+
 def main():
     print("\033[91mUniform test\033[0m")
     cantidad_consultas = int(input("¿Cuántas consultas aleatorias desea realizar? "))
@@ -50,7 +64,12 @@ def main():
         print(f"\nPromedio de tiempo de respuesta: {promedio_tiempos:.3f} segundos")
     else:
         print("\nNo se registraron tiempos de respuesta válidos.")
+
+    cache_hits = fetch_cache_hit()
     
+    if cache_hits is not None:
+        print(f"Porcentaje de cache hits: {cache_hits / cantidad_consultas * 100:.2f}%")
+
     # Gráfico de la cantidad de consultas por ID de asignatura
     plt.figure(figsize=(19.2, 10.8))
     ids = list(registro_consultas.keys())
