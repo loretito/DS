@@ -14,7 +14,7 @@ def random_id_entropy():
     random_float = random_source.random()
 
     # Scale the random float to the desired range [1, 8349]
-    number = int(random_float * 8000) + 1
+    number = int(random_float * 69688) + 1
 
     return number
 

@@ -7,13 +7,13 @@ const Redis = require('ioredis')
 function buildRedisClient() {
   
   try {
-    // Master host and port should be retrieved from environment variables or configuration
     const masterHost = process.env.REDIS_MASTER_HOST;
     const masterPort = process.env.REDIS_MASTER_PORT;
 
     const client = new Redis({
       host: masterHost,
       port: masterPort,
+      password: "master1234",
       enableAutoPipelining: true, // Optional: Enable auto-pipelining for performance
     })
 
