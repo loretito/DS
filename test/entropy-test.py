@@ -4,6 +4,7 @@ import time
 import matplotlib.pyplot as plt
 
 url_endpoint = 'http://localhost:3000/asignatura/'
+url_endpoint_cache_hit = 'http://localhost:3000/cache-hits'
 
 def random_id_entropy():
     random_source = random.SystemRandom()

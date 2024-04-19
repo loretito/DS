@@ -9,7 +9,7 @@ services:
         ipv4_address: 173.18.0.2
     environment:
       - REDIS_PASSWORD=master1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy volatile-ttl --maxmemory 5mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lfu --maxmemory 5mb
 
   postgresql:
     image: postgres

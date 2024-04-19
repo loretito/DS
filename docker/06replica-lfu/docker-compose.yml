@@ -6,7 +6,7 @@ services:
     environment:
       - REDIS_REPLICATION_MODE=master
       - REDIS_PASSWORD=master1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy volatile-ttl --maxmemory 5mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lfu --maxmemory 5mb
     networks:
       redis_cluster_net:
         ipv4_address: 173.18.0.2
@@ -23,7 +23,7 @@ services:
       - REDIS_MASTER_PORT_NUMBER=6379
       - REDIS_MASTER_PASSWORD=master1234
       - REDIS_PASSWORD=replica1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy volatile-ttl --maxmemory 5mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lfu --maxmemory 5mb
     networks:
       redis_cluster_net:
         ipv4_address: 173.18.0.3
@@ -40,7 +40,7 @@ services:
       - REDIS_MASTER_PORT_NUMBER=6379
       - REDIS_MASTER_PASSWORD=master1234
       - REDIS_PASSWORD=replica1234
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy volatile-ttl --maxmemory 5mb
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy allkeys-lfu --maxmemory 5mb
     networks:
       redis_cluster_net:
         ipv4_address: 173.18.0.4
