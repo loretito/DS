@@ -1,0 +1,40 @@
+services:
+  redis-clasic-volatile-ttl:
+    image: 'bitnami/redis:7.0.4-debian-11-r23'
+    container_name: redis-volatile-ttl
+    expose:
+      - '6379'
+    networks:
+      ipv4_network:
+        ipv4_address: 173.18.0.2
+    environment:
+      - REDIS_PASSWORD=master1234
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory-policy volatile-ttl --maxmemory 2mb
+
+  postgresql:
+    image: postgres
+    container_name: pgdb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ramos
+    ports:
+      - "5454:5432"
+    networks:
+      ipv4_network:
+        ipv4_address: 173.18.0.10
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ../db-init:/docker-entrypoint-initdb.d
+    
+networks:
+  ipv4_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 173.18.0.0/16
+
+volumes:
+  db_data: {}
+

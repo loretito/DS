@@ -5,7 +5,7 @@ const PROTO_PATH = './services.proto';
 
 require('dotenv').config()
 const path = require('path')
-const buildRedisClient = require('./service/redisClient')
+const buildRedisClient = require('./service/redisClientCluster')
 
 const redis = buildRedisClient()
 

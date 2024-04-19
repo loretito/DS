@@ -1,5 +1,5 @@
 const express = require('express');
-const { client1 } = require('./redis/redis');  
+const { client1 } = require('./service/redisClasic');  
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const PROTO_PATH = './services.proto';
