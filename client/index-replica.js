@@ -12,8 +12,7 @@ require('dotenv').config()
 const path = require('path')
 const buildRedisClient = require('./service/redisClientReplica')
 
-const redis = buildRedisClient()
-// Carga de las definiciones del servicio desde el archivo .proto
+const redis = buildRedisClient();
 const PROTO_PATH = './services.proto';
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
     keepCase: true,
@@ -28,9 +27,6 @@ const clientService = new AsignaturaServicios(
     grpc.credentials.createInsecure()
 );
 
-
-
-// Endpoint para obtener todas las asignaturas
 app.get('/asignaturas', (req, res) => {
     const cacheKey = 'todas_asignaturas';
 
@@ -55,10 +51,9 @@ app.get('/asignaturas', (req, res) => {
     });
 });
 
-// Endpoint para obtener una asignatura específica por ID
 app.get('/asignatura/:id', async (req, res) => {
     const cacheKey = `asignatura_${req.params.id}`;
-    const id = parseInt(req.params.id);  // Parse the ID to ensure it's an integer
+    const id = parseInt(req.params.id);  
 
     const cache = await redis.get(cacheKey);
     if (cache) {
@@ -77,7 +72,7 @@ app.get('/asignatura/:id', async (req, res) => {
                 return res.status(404).json({ message: 'Asignatura not found' });
             }
             redis.set(cacheKey, JSON.stringify(response));
-            res.json(response);  // Ensure you are sending the correct part of the response
+            res.json(response);  
         });
     }
 });

@@ -9,7 +9,6 @@ const PORT = 3000;
 
 let cacheHits = 0;
 
-// Load and define the gRPC service
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
     keepCase: true,
     longs: String,
@@ -20,17 +19,15 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
 
 const AsignaturaServicios = grpc.loadPackageDefinition(packageDefinition).AsignaturaServicios;
 
-// Create a new gRPC client
 const clientService = new AsignaturaServicios(
-    '127.0.0.1:50051',  // Ensure this is the correct address for the gRPC server
-    grpc.credentials.createInsecure()  // Only for development, consider secure options for production
+    '127.0.0.1:50051',
+    grpc.credentials.createInsecure()  
 );
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-// Endpoint to get all asignaturas
 app.get('/asignaturas', async (req, res) => {
     const cacheKey = 'asignaturas_all';
     const cache = await client1.get(cacheKey);
@@ -47,16 +44,15 @@ app.get('/asignaturas', async (req, res) => {
                 return res.status(500).json({ message: 'Internal server error' });
             }
             const data = JSON.stringify(items);
-            client1.set(cacheKey, data, 'EX', 3600); // Set cache with a 1-hour expiration
+            client1.set(cacheKey, data, 'EX', 3600); 
             res.json(items);
         });
     }
 });
 
-
 app.get('/asignatura/:id', async (req, res) => {
     const cacheKey = `asignatura_${req.params.id}`;
-    const id = parseInt(req.params.id);  // Parse the ID to ensure it's an integer
+    const id = parseInt(req.params.id);  
 
     const cache = await client1.get(cacheKey);
     if (cache) {
@@ -77,7 +73,7 @@ app.get('/asignatura/:id', async (req, res) => {
             client1.set(cacheKey, JSON.stringify(response), 'EX', 3600, err => {
                 if (err) console.error('Error setting cache:', err);
             });
-            res.json(response);  // Ensure you are sending the correct part of the response
+            res.json(response);  
         });
     }
 });

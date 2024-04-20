@@ -1,20 +1,15 @@
 syntax = "proto3";
 
-// Define un servicio que maneja solicitudes relacionadas con asignaturas
 service AsignaturaServicios {
-    // Retorna todas las asignaturas
     rpc ObtenerTodasAsignaturas (Vacio) returns (ListaAsignaturas) {}
 
-    // Retorna una asignatura específica por ID
     rpc ObtenerAsignaturaPorId (AsignaturaId) returns (Asignatura) {}
 
     rpc ObtenerAsignaturaPorCodigo (CodigoAsignatura) returns (ListaAsignaturas) {}
 }
 
-// Mensaje vacío utilizado para solicitudes que no requieren parámetros específicos
 message Vacio {}
 
-// Define la estructura de una asignatura, adaptada a los campos de tu tabla
 message Asignatura {
     int32 bd_id = 1;
     string codigo_asignatura = 2;
@@ -27,21 +22,18 @@ message Asignatura {
     string paquete = 9;
 }
 
-// Utilizado para devolver una única asignatura
 message AsignaturaRespuesta {
     Asignatura asignatura = 1;
 }
 
-// Utilizado para devolver una lista de asignaturas
 message ListaAsignaturas {
     repeated Asignatura asignaturas = 1;
 }
 
-// Mensaje para solicitar una asignatura por su ID
 message AsignaturaId {
     int32 id = 1;
 }
 
-message CodigoAsignatura { // Define the request type for fetching by codigo
+message CodigoAsignatura { 
     string codigo = 1;
 }

@@ -14,7 +14,6 @@ const PORT = 3000;
 
 let cacheHits = 0;
 
-// Load and define the gRPC service
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
     keepCase: true,
     longs: String,
@@ -33,7 +32,6 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-// Endpoint to get all asignaturas
 app.get('/asignaturas', async (req, res) => {
     const cacheKey = 'asignaturas_all';
     const cache = await redis.get(cacheKey);
@@ -49,16 +47,15 @@ app.get('/asignaturas', async (req, res) => {
                 return res.status(500).json({ message: 'Internal server error' });
             }
             const data = JSON.stringify(items);
-            redis.set(cacheKey, data); // Set cache with a 1-hour expiration
+            redis.set(cacheKey, data); 
             res.json(items);
         });
     }
 });
 
-// Endpoint to get a specific asignatura by ID
 app.get('/asignatura/:id', async (req, res) => {
     const cacheKey = `asignatura_${req.params.id}`;
-    const id = parseInt(req.params.id);  // Parse the ID to ensure it's an integer
+    const id = parseInt(req.params.id);  
 
     const cache = await redis.get(cacheKey);
     if (cache) {
@@ -77,7 +74,7 @@ app.get('/asignatura/:id', async (req, res) => {
                 return res.status(404).json({ message: 'Asignatura not found' });
             }
             redis.set(cacheKey, JSON.stringify(response));
-            res.json(response);  // Ensure you are sending the correct part of the response
+            res.json(response);  
         });
     }
 });
