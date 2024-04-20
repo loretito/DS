@@ -3,7 +3,6 @@ const PROTO_PATH = "./services.proto"
 var protoLoader = require("@grpc/proto-loader");
 const postgres = require("./postgres.js");
 
-// Load your protobuf
 var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
     keepCase: true,
     longs: String,
@@ -16,10 +15,8 @@ const serviceProto = grpc.loadPackageDefinition(packageDefinition);
 
 const server = new grpc.Server();
 
-// Implementation of the RPC methods
 server.addService(serviceProto.AsignaturaServicios.service, {
 
-    // Get all entries from asignatura table
     ObtenerTodasAsignaturas: async (call, callback) => {
         try {
             const result = await postgres`
@@ -34,7 +31,6 @@ server.addService(serviceProto.AsignaturaServicios.service, {
         }
     },
 
-    // Get a single entry by ID from asignatura table
     ObtenerAsignaturaPorId: async (call, callback) => {
         try {
             const result = await postgres`
