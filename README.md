@@ -2,18 +2,20 @@
 
 Autors: César Muñoz y Loreto Ñancucheo
 
-
 ### Stack
-![Static Badge](https://img.shields.io/badge/gRPC-5CAFB5?style=for-the-badge&logoColor=%23FF0000&link=https%3A%2F%2Fgrpc.io%2Fdocs%2F)
-![Static Badge](https://img.shields.io/badge/docker-0F3486?style=for-the-badge&logo=docker&link=https%3A%2F%2Fdocs.docker.com%2F)
-![Static Badge](https://img.shields.io/badge/Postgresql-6395BF?style=for-the-badge&logo=postgresql&logoColor=%23ffffff&link=https%3A%2F%2Fwww.postgresql.org%2Fdocs%2F)
+<p align='left'>
+<a href='https://grpc.io/docs/' target='_blank'><img src='https://img.shields.io/badge/gRPC-5CAFB5?style=for-the-badge&logoColor=%23FF0000&link=https%3A%2F%2Fgrpc.io%2Fdocs%2F'>
+<a href='https://docs.docker.com/' target='_blank'><img src='https://img.shields.io/badge/docker-0F3486?style=for-the-badge&logo=docker&link=https%3A%2F%2Fdocs.docker.com%2F'>
+<a href='https://www.postgresql.org/docs/' target='_blank'><img src='https://img.shields.io/badge/Postgresql-6395BF?style=for-the-badge&logo=postgresql&logoColor=%23ffffff&link=https%3A%2F%2Fwww.postgresql.org%2Fdocs%2F'>
 
-![Static Badge](https://img.shields.io/badge/Redis-FF8787?style=for-the-badge&logo=redis&logoColor=%23FF0000&link=https%3A%2F%2Fredis.io%2Fdocs%2Flatest%2F)
-![Static Badge](https://img.shields.io/badge/Python-265075?style=for-the-badge&logo=python&logoColor=%23ffffff&link=https%3A%2F%2Fwww.python.org%2Fdoc%2F)
-![Static Badge](https://img.shields.io/badge/Express-222222?style=for-the-badge&logo=express&link=https%3A%2F%2Fexpressjs.com%2F)
-![Static Badge](https://img.shields.io/badge/javascript-222222?style=for-the-badge&logo=javascript&link=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fdocs%2FWeb%2FJavaScript)
+<p align='left'>
+<a href='https://redis.io/docs/latest/' target='_blank'><img src='https://img.shields.io/badge/Redis-FF8787?style=for-the-badge&logo=redis&logoColor=%23FF0000&link=https%3A%2F%2Fredis.io%2Fdocs%2Flatest%2F'>
+<a href='https://www.python.org/doc/' target='_blank'><img src='https://img.shields.io/badge/Python-265075?style=for-the-badge&logo=python&logoColor=%23ffffff&link=https%3A%2F%2Fwww.python.org%2Fdoc%2F'>
+<a href='https://expressjs.com/' target='_blank'><img src='https://img.shields.io/badge/Express-222222?style=for-the-badge&logo=express&link=https%3A%2F%2Fexpressjs.com%2F'>
+<a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript' target='_blank'><img src='https://img.shields.io/badge/JavaScript-222222?style=for-the-badge&logo=javascript&logoColor=%2300000&link=https%3A%2F%2Fdeveloper.mozilla.org%2Fen-US%2Fdocs%2FWeb%2FJavaScript'>
 
-
+### Video
+<a href='https://www.youtube.com/watch?v=oG4Tal_tkx8' target='_blank'><img src='https://img.shields.io/badge/Video-0F0F0F?style=for-the-badge&logo=youtube&logoColor=%23FF0000'> 
 
 ### Setup
 In both the server and client directories, run:
