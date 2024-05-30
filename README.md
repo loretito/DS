@@ -1,6 +1,6 @@
 # Tarea 1 Sistemas Distribuidos 
 
-Autors: César Muñoz y Loreto Ñancucheo
+Authors: César Muñoz and Loreto Ñancucheo
 
 ### Stack
 <p align='left'>
